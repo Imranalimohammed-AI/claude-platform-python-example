@@ -1,60 +1,115 @@
+<div align="center">
+
 # Claude Platform Python Example
 
-A minimal, production-ready Python starter for the Anthropic Claude API.
+**Production-ready Python starter for the Anthropic Claude API**
 
-Demonstrates three core SDK patterns:
-- **Single message** — one-shot completion with a cached system prompt
-- **Streaming** — print tokens as they arrive
-- **Multi-turn chat** — full conversation history loop
+[![Python](https://img.shields.io/badge/Python-3.14-3776ab?style=flat-square&logo=python&logoColor=white)](https://python.org)
+[![Anthropic](https://img.shields.io/badge/Anthropic_SDK-latest-cc785c?style=flat-square)](https://docs.anthropic.com)
+[![License: MIT](https://img.shields.io/badge/License-MIT-22c55e?style=flat-square)](LICENSE)
+[![Branch](https://img.shields.io/badge/branch-main-3b82f6?style=flat-square&logo=git&logoColor=white)](https://github.com/Imranalimohammed-AI/claude-platform-python-example)
 
-## Quick start
+</div>
 
-```powershell
-# 1. Activate the shared project venv
-cd AI-Vibecoding
-.\.venv\Scripts\Activate.ps1
+---
 
-# 2. Install dependencies
-uv pip install anthropic python-dotenv
+## Overview
 
-# 3. Set your API key (option A — env var)
-$env:ANTHROPIC_API_KEY = "sk-ant-..."
+A minimal, production-ready Python starter demonstrating three core Anthropic SDK patterns — single message, streaming, and multi-turn chat — with prompt caching enabled out of the box.
 
-# 3. Set your API key (option B — .env file)
-Copy-Item ClaudePlatformPythonExample\.env.example ClaudePlatformPythonExample\.env
-# Edit .env and replace sk-ant-api03-YOUR_KEY_HERE with your real key
+---
 
-# 4. Run
-python ClaudePlatformPythonExample\main.py
-```
+## SDK Patterns Demonstrated
 
-## Files
+| Pattern | Description |
+|---------|-------------|
+| **Single message** | One-shot completion with a cached system prompt |
+| **Streaming** | Print tokens as they arrive using the streaming API |
+| **Multi-turn chat** | Full conversation history loop |
 
-| File | Purpose |
-|---|---|
-| `main.py` | Three demo patterns: single, streaming, interactive chat |
-| `requirements.in` | Source dependencies (edit to add packages) |
-| `requirements.txt` | Pinned dependencies |
-| `.env.example` | Environment variable template — copy to `.env` |
-| `README.md` | This file |
-| `ARCHITECTURE.md` | Architecture and API flow reference |
+---
 
-## Available models
-
-Change the `MODEL` constant in `main.py`:
+## Models
 
 | Model ID | Best for |
-|---|---|
+|----------|----------|
 | `claude-opus-4-8` | Most capable, complex reasoning |
 | `claude-sonnet-4-6` | Balanced speed + capability (default) |
 | `claude-haiku-4-5-20251001` | Fastest, lowest cost |
 
-## Prompt caching
+Change the `MODEL` constant in `main.py` to switch models.
 
-All calls use `cache_control: ephemeral` on the system prompt. On repeated calls within the same session the cached tokens are billed at ~10% of standard input price, reducing cost and latency.
+---
 
-## Security notes
+## Prompt Caching
 
-- API key is read from the environment only — never hardcoded.
-- `.env` is not committed to version control (add it to `.gitignore`).
-- All user input is passed as data to the API, not interpolated into the system prompt.
+All calls use `cache_control: ephemeral` on the system prompt. On repeated calls within the same TTL window, cached tokens are billed at ~10% of standard input price — reducing cost and latency for high-frequency use cases.
+
+---
+
+## Branch Strategy
+
+```
+main          ← production, protected (PR-only)
+  └── develop ← integration, all PRs target here
+        ├── feature/<name>
+        ├── fix/<name>
+        └── hotfix/<name>
+```
+
+---
+
+## Quick Start
+
+```powershell
+# Clone
+git clone git@github.com:Imranalimohammed-AI/claude-platform-python-example.git
+cd claude-platform-python-example
+
+# Create virtual environment
+uv venv .venv
+.\.venv\Scripts\Activate.ps1
+
+# Install dependencies
+uv pip install anthropic python-dotenv
+
+# Set API key
+Copy-Item .env.example .env
+# Edit .env: replace placeholder with your real key
+
+# Run
+python main.py
+```
+
+---
+
+## Project Structure
+
+| File | Purpose |
+|------|---------|
+| `main.py` | Three demo patterns: single, streaming, interactive chat |
+| `requirements.txt` | Pinned dependencies |
+| `.env.example` | Environment variable template |
+| `ARCHITECTURE.md` | API flow and caching reference |
+
+---
+
+## Security
+
+| Control | Implementation |
+|---------|---------------|
+| API key | `ANTHROPIC_API_KEY` env var or `.env` — never hardcoded |
+| `.env` | Excluded from version control |
+| User input | Passed as data to API — not interpolated into system prompt |
+
+See [SECURITY.md](SECURITY.md) for the full policy.
+
+---
+
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for branching strategy and PR guidelines.
+
+## License
+
+MIT © 2026 Imranali Mohammed — see [LICENSE](LICENSE)
